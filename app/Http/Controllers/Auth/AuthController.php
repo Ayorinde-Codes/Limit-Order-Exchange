@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\UserResource;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+
+class AuthController extends Controller
+{
+    public function login(LoginRequest $request): JsonResponse
+    {
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
+
+        $user = Auth::user();
+        $token = $user->createToken('auth-token')->plainTextToken;
+
+        return $this->okResponse('Login successful', [
+            'user' => new UserResource($user),
+            'token' => $token,
+        ]);
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return $this->okResponse('Logged out successfully');
+    }
+
+
+    public function register(RegisterRequest $request): JsonResponse
+    {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'balance' => 0,
+        ]);
+
+        $token = $user->createToken('auth-token')->plainTextToken;
+
+        return $this->createdResponse('Registration successful', [
+            'user' => new UserResource($user),
+            'token' => $token,
+        ]);
+    }
+}
