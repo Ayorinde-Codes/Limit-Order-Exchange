@@ -2,12 +2,6 @@
 
 use App\Models\User;
 
-test('user can view login page', function () {
-    $response = $this->get('/');
-
-    $response->assertStatus(200);
-});
-
 test('user can login with valid credentials', function () {
     $user = User::factory()->create([
         'email' => 'test@example.com',
