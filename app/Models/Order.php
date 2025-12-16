@@ -57,6 +57,7 @@ class Order extends Model
     public function scopeForSymbol($query, Symbol|string $symbol)
     {
         $symbolValue = $symbol instanceof Symbol ? $symbol->value : $symbol;
+
         return $query->where('symbol', $symbolValue);
     }
 

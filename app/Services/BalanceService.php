@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\User;
 use App\Models\Asset;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class BalanceService
@@ -19,6 +19,7 @@ class BalanceService
             }
 
             $user->balance -= $requiredBalance;
+
             return $user->save();
         });
     }
@@ -31,11 +32,12 @@ class BalanceService
                 ->where('symbol', $symbol)
                 ->first();
 
-            if (!$asset || $asset->available_amount < $amount) {
+            if (! $asset || $asset->available_amount < $amount) {
                 return false;
             }
 
             $asset->locked_amount += $amount;
+
             return $asset->save();
         });
     }
@@ -64,4 +66,3 @@ class BalanceService
         });
     }
 }
-

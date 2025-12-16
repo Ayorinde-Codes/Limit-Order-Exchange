@@ -10,7 +10,7 @@ class ProfileResource extends JsonResource
     public function toArray(Request $request): array
     {
         $assets = [];
-        
+
         if ($this->relationLoaded('assets') && $this->assets) {
             foreach ($this->assets as $asset) {
                 $assets[] = [
@@ -21,11 +21,10 @@ class ProfileResource extends JsonResource
                 ];
             }
         }
-        
+
         return [
             'balance' => (float) $this->balance,
             'assets' => $assets,
         ];
     }
 }
-

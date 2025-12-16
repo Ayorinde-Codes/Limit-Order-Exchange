@@ -19,7 +19,7 @@ class DashboardController extends Controller
 
         $profile = [
             'balance' => (float) $user->balance,
-            'assets' => $user->assets->map(fn($asset) => [
+            'assets' => $user->assets->map(fn ($asset) => [
                 'symbol' => $asset->symbol->value,
                 'amount' => (float) $asset->amount,
                 'locked_amount' => (float) $asset->locked_amount,

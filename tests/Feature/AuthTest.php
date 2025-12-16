@@ -45,4 +45,3 @@ test('user can logout', function () {
     $response->assertRedirect('/');
     $this->assertGuest();
 });
-

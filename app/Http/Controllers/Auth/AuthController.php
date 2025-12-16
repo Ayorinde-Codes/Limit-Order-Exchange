@@ -17,7 +17,7 @@ class AuthController extends Controller
 {
     public function login(LoginRequest $request): JsonResponse
     {
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if (! Auth::attempt($request->only('email', 'password'))) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
@@ -38,7 +38,6 @@ class AuthController extends Controller
 
         return $this->okResponse('Logged out successfully');
     }
-
 
     public function register(RegisterRequest $request): JsonResponse
     {

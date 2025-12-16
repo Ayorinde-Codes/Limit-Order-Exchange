@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('balance', 20, 8)->default(0);
             $table->rememberToken();
             $table->timestamps();
-            
+
             $table->index('balance');
         });
 

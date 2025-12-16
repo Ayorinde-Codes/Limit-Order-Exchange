@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Asset;
-use App\Models\Order;
 use App\Models\User;
 
 test('guest cannot access orders', function () {
@@ -30,7 +29,7 @@ test('user can create buy order with sufficient balance', function () {
     ]);
 
     $response->assertStatus(201);
-    
+
     $this->assertDatabaseHas('orders', [
         'user_id' => $user->id,
         'symbol' => 'BTC',
@@ -53,7 +52,7 @@ test('user cannot create buy order with insufficient balance', function () {
 
 test('user can create sell order with sufficient assets', function () {
     $user = User::factory()->create(['balance' => 1000.00]);
-    
+
     Asset::factory()->create([
         'user_id' => $user->id,
         'symbol' => 'BTC',
@@ -69,7 +68,7 @@ test('user can create sell order with sufficient assets', function () {
     ]);
 
     $response->assertStatus(201);
-    
+
     $this->assertDatabaseHas('orders', [
         'user_id' => $user->id,
         'symbol' => 'BTC',

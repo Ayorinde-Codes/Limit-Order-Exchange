@@ -16,4 +16,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/orders/{order}/cancel', [OrderController::class, 'cancel']);
     Route::get('/orders/history', [OrderController::class, 'history']);
 });
-

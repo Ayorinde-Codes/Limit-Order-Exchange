@@ -18,14 +18,17 @@ A Laravel + Vue.js (Inertia.js) limit order exchange mini engine for trading BTC
 - **Frontend**: Vue.js 3 (Composition API), Inertia.js, Tailwind CSS
 - **Real-time**: Pusher
 
-## Requirements
+## Installation
 
-- PHP 8.2+
+You can run this application either locally or using Docker.
+
+### Option 1: Local Installation
+
+**Requirements:**
+- PHP 8.4+
 - Composer
 - Node.js 20.19+ or 22.12+
 - MySQL
-
-## Installation
 
 ```bash
 # Clone repository
@@ -43,9 +46,9 @@ php artisan key:generate
 # Configure database in .env
 DB_DATABASE=limit_order_exchange
 DB_USERNAME=root
-DB_PASSWORD=
+DB_PASSWORD=your_password
 
-# Configure Pusher in .env
+# Configure Pusher in .env (optional for real-time)
 PUSHER_APP_ID=your_app_id
 PUSHER_APP_KEY=your_app_key
 PUSHER_APP_SECRET=your_app_secret
@@ -59,6 +62,34 @@ php artisan migrate --seed
 
 # Start development server
 composer run dev
+
+# Access at http://localhost:8000
+```
+
+### Option 2: Docker Installation
+
+**Requirements:**
+- Docker
+- Docker Compose
+
+```bash
+# Clone repository
+git clone https://github.com/Ayorinde-Codes/Limit-Order-Exchange.git
+cd Limit-Order-Exchange
+
+# Environment setup
+cp .env.example .env
+
+# Start containers (DB credentials are configured in docker-compose.yml)
+docker compose up -d
+
+# Access at http://localhost:8080
+```
+
+## Running Tests
+
+```bash
+./vendor/bin/pest
 ```
 
 ## Test Users
@@ -79,5 +110,3 @@ composer run dev
 | POST | /api/orders | Create new order |
 | POST | /api/orders/{id}/cancel | Cancel order |
 | GET | /api/orders/history | Get order history |
-
-

@@ -2,7 +2,6 @@
 
 namespace App\Actions\Order;
 
-use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -26,4 +25,3 @@ class GetOrderHistoryAction
             ->paginate(15);
     }
 }
-

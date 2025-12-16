@@ -4,13 +4,12 @@ namespace App\Services;
 
 use App\Enums\OrderSide;
 use App\Enums\OrderStatus;
+use App\Events\OrderMatched;
+use App\Models\Asset;
 use App\Models\Order;
 use App\Models\Trade;
 use App\Models\User;
-use App\Models\Asset;
-use App\Events\OrderMatched;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class OrderMatchingService
 {
@@ -20,20 +19,20 @@ class OrderMatchingService
     {
         return DB::transaction(function () use ($newOrder) {
             $order = Order::lockForUpdate()->find($newOrder->id);
-            
-            if (!$order || !$order->isOpen()) {
+
+            if (! $order || ! $order->isOpen()) {
                 return null;
             }
 
             $counterOrder = $this->findMatchingOrder($order);
 
-            if (!$counterOrder) {
+            if (! $counterOrder) {
                 return null;
             }
 
             $counterOrder = Order::lockForUpdate()->find($counterOrder->id);
-            
-            if (!$counterOrder || !$counterOrder->isOpen()) {
+
+            if (! $counterOrder || ! $counterOrder->isOpen()) {
                 return null;
             }
 
@@ -43,9 +42,6 @@ class OrderMatchingService
 
     /**
      * Find a matching order for sell order and buy order
-     *
-     * @param Order $order
-     * @return Order|null
      */
     private function findMatchingOrder(Order $order): ?Order
     {
@@ -83,7 +79,7 @@ class OrderMatchingService
         $totalValue = $tradeAmount * $tradePrice;
 
         $commission = $totalValue * self::COMMISSION_RATE;
-        
+
         $buyerCommission = $commission;
         $sellerCommission = $commission / $tradePrice;
 
@@ -113,7 +109,7 @@ class OrderMatchingService
             ->where('symbol', $buyOrder->symbol)
             ->first();
 
-        if (!$buyerAsset) {
+        if (! $buyerAsset) {
             $buyerAsset = Asset::create([
                 'user_id' => $buyer->id,
                 'symbol' => $buyOrder->symbol,
@@ -156,4 +152,3 @@ class OrderMatchingService
         return $trade;
     }
 }
-

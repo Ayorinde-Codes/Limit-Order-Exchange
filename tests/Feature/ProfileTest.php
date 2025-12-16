@@ -22,7 +22,7 @@ test('user can get profile', function () {
 
 test('profile includes user assets', function () {
     $user = User::factory()->create(['balance' => 10000.00]);
-    
+
     Asset::factory()->create([
         'user_id' => $user->id,
         'symbol' => 'BTC',

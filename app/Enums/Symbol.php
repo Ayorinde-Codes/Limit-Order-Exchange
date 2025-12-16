@@ -7,4 +7,3 @@ enum Symbol: string
     case BTC = 'BTC';
     case ETH = 'ETH';
 }
-

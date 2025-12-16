@@ -19,7 +19,7 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
+        if (! Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
@@ -37,7 +37,7 @@ class LoginController extends Controller
             $request->session()->invalidate();
             $request->session()->regenerateToken();
         } catch (\Exception $e) {
-            \Log::warning('Logout error: ' . $e->getMessage());
+            \Log::warning('Logout error: '.$e->getMessage());
         }
 
         return redirect('/');

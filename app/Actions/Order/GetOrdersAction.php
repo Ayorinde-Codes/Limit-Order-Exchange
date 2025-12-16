@@ -21,8 +21,8 @@ class GetOrdersAction
 
         $orders = $query->get();
 
-        $buyOrders = $orders->filter(fn($order) => $order->side === OrderSide::BUY)->values();
-        $sellOrders = $orders->filter(fn($order) => $order->side === OrderSide::SELL)->values();
+        $buyOrders = $orders->filter(fn ($order) => $order->side === OrderSide::BUY)->values();
+        $sellOrders = $orders->filter(fn ($order) => $order->side === OrderSide::SELL)->values();
 
         return [
             'buy_orders' => OrderResource::collection($buyOrders)->toArray(request()),
@@ -30,4 +30,3 @@ class GetOrdersAction
         ];
     }
 }
-

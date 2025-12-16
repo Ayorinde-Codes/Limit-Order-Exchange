@@ -4,7 +4,6 @@ namespace App\Actions\Order;
 
 use App\Enums\OrderSide;
 use App\Enums\OrderStatus;
-use App\Enums\Symbol;
 use App\Models\Order;
 use App\Models\User;
 use App\Services\BalanceService;
@@ -25,7 +24,7 @@ class CancelOrderAction
             ]);
         }
 
-        if (!$order->isOpen()) {
+        if (! $order->isOpen()) {
             throw ValidationException::withMessages([
                 'order' => 'Order cannot be cancelled',
             ]);
@@ -46,4 +45,3 @@ class CancelOrderAction
         });
     }
 }
-

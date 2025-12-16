@@ -11,7 +11,7 @@ class ProfileController extends Controller
 {
     public function __invoke(): JsonResponse
     {
-        $user = Auth::user()->load(['assets']); //prevents N+1
+        $user = Auth::user()->load(['assets']); // prevents N+1
 
         return $this->okResponse(
             'Profile retrieved successfully',

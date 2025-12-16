@@ -21,13 +21,13 @@ class CreateOrderAction
         return DB::transaction(function () use ($data, $user) {
             if ($data['side'] === 'buy') {
                 $requiredBalance = $data['amount'] * $data['price'];
-                if (!$this->balanceService->lockBalanceForBuyOrder($user, $data['symbol'], $data['amount'], $data['price'])) {
+                if (! $this->balanceService->lockBalanceForBuyOrder($user, $data['symbol'], $data['amount'], $data['price'])) {
                     throw ValidationException::withMessages([
                         'balance' => 'Insufficient balance',
                     ]);
                 }
             } else {
-                if (!$this->balanceService->lockAssetForSellOrder($user, $data['symbol'], $data['amount'])) {
+                if (! $this->balanceService->lockAssetForSellOrder($user, $data['symbol'], $data['amount'])) {
                     throw ValidationException::withMessages([
                         'amount' => 'Insufficient asset amount',
                     ]);
@@ -49,4 +49,3 @@ class CreateOrderAction
         });
     }
 }
-

@@ -4,7 +4,6 @@ namespace App\Events;
 
 use App\Models\Trade;
 use App\Models\User;
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -24,8 +23,8 @@ class OrderMatched implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('user.' . $this->buyer->id),
-            new PrivateChannel('user.' . $this->seller->id),
+            new PrivateChannel('user.'.$this->buyer->id),
+            new PrivateChannel('user.'.$this->seller->id),
         ];
     }
 
