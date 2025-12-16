@@ -11,14 +11,14 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // User 1: Buyer with high balance
+        // User 1: Buyer
         User::factory()->create([
             'name' => 'John Smith',
             'email' => 'john@example.com',
             'balance' => 100000.00,
         ]);
 
-        // User 2: Buyer with medium balance
+        // User 2: Buyer
         User::factory()->create([
             'name' => 'Alan Cooper',
             'email' => 'alan@example.com',
