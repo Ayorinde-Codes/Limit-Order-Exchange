@@ -16,6 +16,9 @@ services:
       DB_USERNAME: laravel
       DB_PASSWORD: secret
       REDIS_HOST: redis
+      SANCTUM_STATEFUL_DOMAINS: localhost:8080
+      SESSION_DOMAIN: localhost
+      APP_URL: http://localhost:8080
     depends_on:
       - db
       - redis
@@ -35,10 +38,7 @@ services:
       MYSQL_PASSWORD: secret
     healthcheck:
       test:
-        [
-          "CMD-SHELL",
-          "mysqladmin ping -h localhost -u root -psecret || exit 1",
-        ]
+        ["CMD-SHELL", "mysqladmin ping -h localhost -u root -psecret || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
